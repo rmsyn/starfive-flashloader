@@ -1,0 +1,23 @@
+[package]
+name = "starfive-flashloader"
+version = "0.1.0"
+edition = "2021"
+authors = ["rmsyn <rmsynchls@gmail.com>"]
+categories = ["embedded", "hardware-support", "no-std"]
+description = "`probe-rs` compatible flashloader for Starfive JH7110 boards"
+keywords = ["riscv", "jh7110", "bsp"]
+license = "GPL-3.0-only"
+
+[dependencies]
+panic-halt = "0.2.0"
+jh71xx-pac = { git = "https://github.com/rmsyn/jh71xx-pac" }
+riscv = "0.10"
+
+[features]
+visionfive2-12a = ["jh71xx-pac/visionfive2-12a"]
+visionfive2-13b = ["jh71xx-pac/visionfive2-13b"]
+std = []
+
+[[bin]]
+name = "write_sectors"
+required-features = ["std"]
