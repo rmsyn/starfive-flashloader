@@ -10,11 +10,13 @@
 
 use core::slice;
 
-//use panic_never as _;
 extern crate panic_halt;
 
-use jh71xx_pac::jh7110_vf2_12a_pac as pac;
-use pac::{qspi, QSPI};
+#[cfg(feature = "visionfive2-12a")]
+use jh7110_vf2_12a_pac::{qspi, QSPI};
+#[cfg(feature = "visionfive2-13b")]
+use jh7110_vf2_13b_pac::{qspi, QSPI};
+
 use riscv::register::mcycle;
 
 mod opcode;
@@ -46,10 +48,7 @@ const PAGE_LEN: usize = 256;
 // Implicit in the Linux driver because the temp mod word is initialized to `0xffff_ffff`
 const EMPTY: u8 = 0xff;
 
-#[cfg(feature = "visionfive2-12a")]
-const VERSION: u16 = 0x0c0a;
-#[cfg(feature = "visionfive2-13b")]
-const VERSION: u16 = 0x0d0b;
+const VERSION: u16 = 0x0;
 
 pub type Result<T> = core::result::Result<T, Error>;
 
