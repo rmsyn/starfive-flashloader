@@ -10,13 +10,24 @@ license = "GPL-3.0-only"
 
 [dependencies]
 panic-halt = "0.2.0"
-jh71xx-pac = { git = "https://github.com/rmsyn/jh71xx-pac" }
+jh7110-vf2-12a-pac = { git = "https://github.com/rmsyn/jh71xx-pac", optional = true }
+jh7110-vf2-13b-pac = { git = "https://github.com/rmsyn/jh71xx-pac", optional = true }
 riscv = "0.10"
 
 [features]
-visionfive2-12a = ["jh71xx-pac/visionfive2-12a"]
-visionfive2-13b = ["jh71xx-pac/visionfive2-13b"]
+visionfive2-12a = ["jh7110-vf2-12a-pac"]
+visionfive2-13b = ["jh7110-vf2-13b-pac"]
 std = []
+
+[profile.dev]
+debug = true
+
+# Thanks to @9names for the config option suggestions:
+# https://github.com/probe-rs/probe-rs/issues/1852#issuecomment-1793268620
+[profile.release]
+codegen-units = 1
+lto = 'fat'
+opt-level = 's'
 
 [[bin]]
 name = "write_sectors"
